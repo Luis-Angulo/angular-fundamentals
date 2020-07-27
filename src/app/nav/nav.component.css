@@ -1,0 +1,14 @@
+.nav.navbar-nav {
+  font-size: 1.75rem;
+}
+
+#searchForm {
+  margin-right: 3rem;
+}
+
+/* Mediaquery for hiding the search form */
+@media (max-width: 1200px) {
+  #searchForm {
+    display: none;
+  }
+}
