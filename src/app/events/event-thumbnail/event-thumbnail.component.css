@@ -7,3 +7,9 @@
 .thumbnail {
   min-height: 30rem;
 }
+.green {
+  color: #003300 !important;
+}
+.bold {
+  font-weight: bold;
+}
