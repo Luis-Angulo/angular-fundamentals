@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../event.type';
 import { EventService } from '../event.service';
+import { ToastrService } from 'src/app/common/toastr.service';
 
 // Like HTML, you can define styles in a style property without the need for an external
 // stylesheet OR you can define a stylesheet and reference it here using relative path
@@ -11,7 +12,10 @@ import { EventService } from '../event.service';
 export class EventsListComponent implements OnInit {
   events: Event[];
 
-  constructor(private eventService: EventService) {}
+  constructor(
+    private eventService: EventService,
+    private toastrService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     console.log('ngOnInit called!');
@@ -21,7 +25,8 @@ export class EventsListComponent implements OnInit {
     );
   }
 
-  handleEventClicked(event): void {
-    console.log(event);
+  handleEventClicked(message: string): void {
+    // Check toastrService for an example on how to integrate external non-typescript libraries
+    this.toastrService.spawn(message);
   }
 }
