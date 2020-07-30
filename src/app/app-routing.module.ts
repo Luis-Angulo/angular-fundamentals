@@ -12,8 +12,6 @@ import { EventDetailComponent } from './events/event-detail/event-detail.compone
     // AppRouting is the base router, so it uses forRoot
     // Maybe extract routes to events module if more modules come in
     RouterModule.forRoot([
-      { path: 'events/:id', component: EventDetailComponent }, // arg placeholder for router
-      { path: 'events', component: EventsListComponent },
       { path: '', redirectTo: 'events', pathMatch: 'full' },
       { path: '**', redirectTo: 'events', pathMatch: 'full' },
     ]),
