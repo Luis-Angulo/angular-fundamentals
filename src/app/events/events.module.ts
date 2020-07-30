@@ -4,6 +4,7 @@ import { EventThumbnailComponent } from './event-thumbnail/event-thumbnail.compo
 import { CommonModule } from '@angular/common';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { EventsRoutingModule } from './events-routing.module';
+import { EventCreateComponent } from './event-create/event-create.component';
 
 @NgModule({
   imports: [CommonModule, EventsRoutingModule],
@@ -11,6 +12,7 @@ import { EventsRoutingModule } from './events-routing.module';
     EventsListComponent,
     EventThumbnailComponent,
     EventDetailComponent,
+    EventCreateComponent,
   ],
   exports: [EventsListComponent],
 })
