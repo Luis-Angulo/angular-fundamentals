@@ -4,6 +4,11 @@ import { Event } from './event.type';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
+  
+  getEvent(eventId: number): Observable<Event> {
+    return of(this.events.find((e) => e.id === eventId));
+  }
+
   events: Event[] = [
     {
       id: 1,
