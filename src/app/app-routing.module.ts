@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 // Routed components
-import { EventsListComponent } from './events/events-list/events-list.component';
-import { EventDetailComponent } from './events/event-detail/event-detail.component';
+import { ErrorComponent } from './error/error.component';
 
 // Module config decorator
 @NgModule({
@@ -12,6 +11,7 @@ import { EventDetailComponent } from './events/event-detail/event-detail.compone
     // AppRouting is the base router, so it uses forRoot
     // Maybe extract routes to events module if more modules come in
     RouterModule.forRoot([
+      { path: 'error', component: ErrorComponent },
       { path: '', redirectTo: 'events', pathMatch: 'full' },
       { path: '**', redirectTo: 'events', pathMatch: 'full' },
     ]),
