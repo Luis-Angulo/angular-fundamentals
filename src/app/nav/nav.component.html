@@ -10,14 +10,12 @@
           <a
             [routerLink]="['/events']"
             routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact:true}"
+            [routerLinkActiveOptions]="{ exact: true }"
             >All Events</a
           >
         </li>
         <li>
-          <a
-            [routerLink]="['/events/new']"
-            routerLinkActive="active"
+          <a [routerLink]="['/events/new']" routerLinkActive="active"
             >Create Event</a
           >
         </li>
@@ -36,7 +34,12 @@
       <div class="navbar-header navbar-right">
         <ul class="nav navbar-nav">
           <li>
-            <a>Welcome John</a>
+            <a
+              [routerLink]="['user/profile']"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Welcome John</a
+            >
           </li>
         </ul>
       </div>
