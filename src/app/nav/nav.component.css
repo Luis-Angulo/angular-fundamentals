@@ -12,3 +12,7 @@
     display: none;
   }
 }
+
+li > a.active {
+  color: rgb(39, 39, 83);
+}

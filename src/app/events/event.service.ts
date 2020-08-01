@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Event } from './event.type';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
-  events: Event[] = [
+  EVENTS: Event[] = [
     {
       id: 1,
       name: 'Angular Connect',
@@ -311,8 +311,18 @@ export class EventService {
     },
   ];
 
+  getEvent(eventId: number): Observable<Event> {
+    return of(this.EVENTS.find((e) => e.id === eventId));
+  }
+
   getEvents(): Observable<Event[]> {
-    console.log('eventservice called!');
-    return of(this.events);
+    // Simulate a delayed AJAX call using observables
+    const waitMillis = 100;
+    const subject = new Subject<Event[]>();
+    setTimeout(() => {
+      subject.next(this.EVENTS);
+      subject.complete();
+    }, waitMillis);
+    return subject;
   }
 }
