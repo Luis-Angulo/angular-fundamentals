@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EventDetailGuard } from './EventDetail.guard';
+import { EventDetailGuard } from './event-detail.guard';
 
 describe('EventsGuard', () => {
   let guard: EventDetailGuard;

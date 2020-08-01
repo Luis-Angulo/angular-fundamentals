@@ -8,8 +8,8 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EventService } from './event.service';
-import { Event } from './event.type';
+import { EventService } from '../event.service';
+import { Event } from '../event.type';
 
 @Injectable({
   providedIn: 'root',
