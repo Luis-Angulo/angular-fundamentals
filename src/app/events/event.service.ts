@@ -317,7 +317,7 @@ export class EventService {
 
   getEvents(): Observable<Event[]> {
     // Simulate a delayed AJAX call using observables
-    const waitMillis = 2000;
+    const waitMillis = 100;
     const subject = new Subject<Event[]>();
     setTimeout(() => {
       subject.next(this.EVENTS);
