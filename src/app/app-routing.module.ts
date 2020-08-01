@@ -13,6 +13,7 @@ import { ErrorComponent } from './error/error.component';
     RouterModule.forRoot([
       { path: 'error', component: ErrorComponent },
       { path: '', redirectTo: 'events', pathMatch: 'full' },
+      { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
       { path: '**', redirectTo: 'events', pathMatch: 'full' },
     ]),
   ],
