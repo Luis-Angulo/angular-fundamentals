@@ -9,7 +9,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EventService } from '../event.service';
-import { Event } from '../event.type';
+import { Event } from '../../types/event.type';
 
 @Injectable({
   providedIn: 'root',
