@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/common/auth.service';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -10,24 +10,44 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class UserProfileComponent implements OnInit {
   public profileForm: FormGroup; // Template accesible members must be public
+  firstName: FormControl; // defined as members for validation method reuse
+  lastName: FormControl;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    const firstName = new FormControl(this.authService.currentUser.firstName);
-    const lastName = new FormControl(this.authService.currentUser.lastName);
+    this.firstName = new FormControl(
+      this.authService.currentUser.firstName,
+      Validators.required
+    );
+    this.lastName = new FormControl(
+      this.authService.currentUser.lastName,
+      Validators.required
+    );
     this.profileForm = new FormGroup({
-      firstName,
-      lastName,
+      firstName: this.firstName,
+      lastName: this.lastName,
     });
   }
 
+  // might be cool to pass a reference to the field in and use a single method in larger forms
+  isFirstNameValid(): boolean {
+    return this.firstName.valid || this.firstName.untouched;
+  }
+
+  isLastNameValid(): boolean {
+    return this.lastName.valid || this.lastName.untouched;
+  }
+
   saveChanges(formValues: any): void {
-    this.authService.updateUserProfile(
-      formValues.firstName,
-      formValues.lastName
-    );
-    this.router.navigate(['events']);
+    if (this.profileForm.valid) {
+      this.authService.updateUserProfile(
+        formValues.firstName,
+        formValues.lastName
+      );
+      this.router.navigate(['events']);
+    }
+    // maybe error message here?
   }
 
   cancel(): void {
