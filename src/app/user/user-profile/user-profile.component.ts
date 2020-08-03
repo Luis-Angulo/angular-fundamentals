@@ -18,11 +18,14 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.firstName = new FormControl(
       this.authService.currentUser.firstName,
-      Validators.required
+      // regex for "must start with letters"
+      // regex from course was '[a-zA-Z.*]' to test that the value should start with letters
+      // this is wrong, and I substituted the string here to match only alphabetical characters
+      [Validators.required, Validators.pattern('[a-zA-Z ]*')]
     );
     this.lastName = new FormControl(
       this.authService.currentUser.lastName,
-      Validators.required
+      [Validators.required, Validators.pattern('[a-zA-Z ]*')]
     );
     this.profileForm = new FormGroup({
       firstName: this.firstName,
