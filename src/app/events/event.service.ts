@@ -315,6 +315,12 @@ export class EventService {
     return of(this.EVENTS.find((e) => e.id === eventId));
   }
 
+  saveEvent(event: Event): void {
+    event.id = 999; // HC remove later
+    event.sessions = [];
+    this.EVENTS.push(event);
+  }
+
   getEvents(): Observable<Event[]> {
     // Simulate a delayed AJAX call using observables
     const waitMillis = 100;
