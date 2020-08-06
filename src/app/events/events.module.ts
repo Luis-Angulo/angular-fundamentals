@@ -7,6 +7,7 @@ import { EventsRoutingModule } from './events-routing.module';
 import { EventCreateComponent } from './event-create/event-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionCreateComponent } from './session-create/session-create.component';
+import { SessionsListComponent } from './sessions-list/sessions-list.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { SessionCreateComponent } from './session-create/session-create.componen
     EventDetailComponent,
     EventCreateComponent,
     SessionCreateComponent,
+    SessionsListComponent,
   ],
   exports: [EventsListComponent],
 })
