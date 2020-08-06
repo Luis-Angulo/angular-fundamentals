@@ -66,6 +66,7 @@
       <em *ngIf="abstract.touched && abstract.errors?.maxlength"
         >400 characters or less</em
       >
+      <em *ngIf="abstract.touched && abstract.errors?.restrictedWords">Restricted words found {{abstract.errors.restrictedWords}}</em>
       <textarea
         [class.error]="abstract.invalid && abstract.touched"
         formControlName="abstract"

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Session } from 'src/app/types/session.type';
+import { restrictedWords } from 'src/app/common/validators/restrictedWords.validator';
 
 @Component({
   selector: 'app-session-create',
@@ -26,6 +27,7 @@ export class SessionCreateComponent implements OnInit {
     this.abstract = new FormControl('', [
       Validators.required,
       Validators.maxLength(400),
+      restrictedWords(['foo', 'bar']),
     ]);
 
     this.newSessionForm = new FormGroup({
@@ -39,7 +41,7 @@ export class SessionCreateComponent implements OnInit {
 
   saveSession(formValues: any): void {
     const values: Session = {
-      id: undefined,
+      id: 0,
       name: formValues.name,
       presenter: formValues.presenter,
       duration: +formValues.duration,
@@ -48,12 +50,12 @@ export class SessionCreateComponent implements OnInit {
       voters: [],
     };
 
-    console.log(formValues);
-    /*
     if (this.newSessionForm.valid) {
-      this.router.navigate(['events']);
+      // Should have a save implemented here but
+      // course will do it much later
+      console.log('valid');
+      // this.router.navigate(['events']);
     }
-    */
   }
 
   cancel(): void {
