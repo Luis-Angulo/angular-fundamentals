@@ -5,14 +5,22 @@ import { CommonModule } from '@angular/common';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { EventsRoutingModule } from './events-routing.module';
 import { EventCreateComponent } from './event-create/event-create.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SessionCreateComponent } from './session-create/session-create.component';
 
 @NgModule({
-  imports: [CommonModule, EventsRoutingModule],
+  imports: [
+    CommonModule,
+    EventsRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     EventsListComponent,
     EventThumbnailComponent,
     EventDetailComponent,
     EventCreateComponent,
+    SessionCreateComponent,
   ],
   exports: [EventsListComponent],
 })

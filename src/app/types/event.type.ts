@@ -4,7 +4,7 @@ import { Location } from './location.type';
 export interface Event {
   id: number;
   name: string;
-  date: string;
+  date: Date;
   time: string;
   price: number;
   imageUrl: string;
