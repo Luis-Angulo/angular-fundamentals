@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Session } from 'src/app/types/session.type';
-import { restrictedWords } from 'src/app/common/validators/restrictedWords.validator';
+import { restrictedWords } from 'src/app/shared/validators/restrictedWords.validator';
 
 @Component({
   selector: 'app-session-create',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../../types/event.type';
 import { EventService } from '../event.service';
-import { ToastrService } from 'src/app/common/toastr.service';
+import { ToastrService } from 'src/app/shared/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 
 // Like HTML, you can define styles in a style property without the need for an external
