@@ -1,5 +1,7 @@
 <div (click)="toggleContent()" class="well pointable">
-  <h4 class="well-title">{{ title }}</h4>
   <!-- Any content from the parent's template, html or angular components, will be put inside these tags -->
-  <ng-content *ngIf="visible"> </ng-content>
+  <h3>
+    <ng-content selector="well-title"> </ng-content>
+  </h3>
+  <ng-content *ngIf="visible" selector="well-body"> </ng-content>
 </div>
