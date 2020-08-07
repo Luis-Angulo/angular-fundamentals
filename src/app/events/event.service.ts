@@ -321,6 +321,11 @@ export class EventService {
     this.EVENTS.push(event);
   }
 
+  updateEvent(event: Event): void {
+    const index = this.EVENTS.findIndex((x) => x.id === event.id);
+    this.EVENTS[index] = event;
+  }
+
   getEvents(): Observable<Event[]> {
     // Simulate a delayed AJAX call using observables
     const waitMillis = 100;

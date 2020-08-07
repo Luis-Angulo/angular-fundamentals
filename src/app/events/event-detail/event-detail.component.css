@@ -4,5 +4,14 @@
 }
 
 .event-image {
-  width: 25rem; height: 25rem;
+  width: 25rem;
+  height: 25rem;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

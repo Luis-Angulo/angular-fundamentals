@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Session } from 'src/app/types/session.type';
@@ -10,6 +10,8 @@ import { restrictedWords } from 'src/app/common/validators/restrictedWords.valid
   styleUrls: ['./session-create.component.css'],
 })
 export class SessionCreateComponent implements OnInit {
+  @Output() saveNewSession: EventEmitter<Session> = new EventEmitter<Session>();
+  @Output() cancelSession = new EventEmitter();
   public newSessionForm: FormGroup;
   public name: FormControl;
   public presenter: FormControl;
@@ -51,14 +53,11 @@ export class SessionCreateComponent implements OnInit {
     };
 
     if (this.newSessionForm.valid) {
-      // Should have a save implemented here but
-      // course will do it much later
-      console.log('valid');
-      // this.router.navigate(['events']);
+      this.saveNewSession.emit(values);
     }
   }
 
   cancel(): void {
-    this.router.navigate(['events']);
+    this.cancelSession.emit();
   }
 }
