@@ -12,6 +12,7 @@ import { Session } from 'src/app/types/session.type';
 export class EventDetailComponent implements OnInit {
   event: Event;
   addMode: boolean;
+  filter = 'all';
 
   constructor(
     private eventService: EventService,
