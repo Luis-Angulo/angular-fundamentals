@@ -8,10 +8,12 @@ import { EventCreateComponent } from './event-create/event-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionCreateComponent } from './session-create/session-create.component';
 import { SessionsListComponent } from './sessions-list/sessions-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     EventsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
