@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TOASTR_TOKEN, Toastr } from 'src/app/shared/toastr.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,7 +14,11 @@ export class UserProfileComponent implements OnInit {
   firstName: FormControl; // defined as members for validation method reuse
   lastName: FormControl;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    @Inject(TOASTR_TOKEN) private toastr: Toastr // inject with token syntax
+  ) {}
 
   ngOnInit(): void {
     this.firstName = new FormControl(
@@ -23,10 +28,10 @@ export class UserProfileComponent implements OnInit {
       // this is wrong, and I substituted the string here to match only alphabetical characters
       [Validators.required, Validators.pattern('[a-zA-Z ]*')]
     );
-    this.lastName = new FormControl(
-      this.authService.currentUser.lastName,
-      [Validators.required, Validators.pattern('[a-zA-Z ]*')]
-    );
+    this.lastName = new FormControl(this.authService.currentUser.lastName, [
+      Validators.required,
+      Validators.pattern('[a-zA-Z ]*'),
+    ]);
     this.profileForm = new FormGroup({
       firstName: this.firstName,
       lastName: this.lastName,
@@ -47,6 +52,10 @@ export class UserProfileComponent implements OnInit {
       this.authService.updateUserProfile(
         formValues.firstName,
         formValues.lastName
+      );
+      this.toastr.success(
+        `${formValues.firstName} ${formValues.lastName}`,
+        'Update success!'
       );
       this.router.navigate(['events']);
     }
