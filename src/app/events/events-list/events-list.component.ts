@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../../types/event.type';
 import { EventService } from '../event.service';
-import { ToastrService } from 'src/app/shared/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 
 // Like HTML, you can define styles in a style property without the need for an external
@@ -13,18 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 export class EventsListComponent implements OnInit {
   events: Event[];
 
-  constructor(
-    private eventService: EventService,
-    private toastrService: ToastrService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.events = this.route.snapshot.data.events;
-  }
-
-  handleEventClicked(message: string): void {
-    // Check toastrService for an example on how to integrate external non-typescript libraries
-    this.toastrService.spawn(message);
   }
 }
