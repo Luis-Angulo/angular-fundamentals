@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Event } from '../types/event.type';
+import { Session } from '../types/session.type';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
@@ -335,5 +336,23 @@ export class EventService {
       subject.complete();
     }, waitMillis);
     return subject;
+  }
+
+  searchSessions(searchTerm: string): Observable<Session[]> {
+    const term = searchTerm.toLocaleLowerCase();
+    let foundSessions: Session[] = [];
+    // look for sessions that match the term for every event
+    this.EVENTS.forEach((event) => {
+      const matches = event.sessions.filter((session) =>
+        session.name.toLocaleLowerCase().includes(term)
+      );
+      const matchesWithId = matches.map((match: any) => {
+        match.eventId = event.id;
+        return match;
+      });
+      foundSessions = foundSessions.concat(matchesWithId);
+    });
+    // original used eventemitter.emit and a timeout to simulate https delay
+    return of(foundSessions);
   }
 }
