@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../../types/event.type';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Session } from 'src/app/types/session.type';
 
 @Component({
@@ -20,12 +20,16 @@ export class EventDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.addMode = false;
-    const eventId: number = +this.route.snapshot.params.id; // cast to number
-    this.eventService.getEvent(eventId).subscribe(
-      (event) => (this.event = event),
-      (err) => alert(`event with id: ${eventId} not found`)
-    );
+    this.route.params.forEach((params: Params) => {
+      // reset state on subscriptions
+      this.addMode = false;
+      this.filter = 'all';
+      const eventId: number = +params.id; // cast to number
+      this.eventService.getEvent(eventId).subscribe(
+        (event) => (this.event = event),
+        (err) => alert(`event with id: ${eventId} not found`)
+      );
+    });
   }
 
   addSession(): void {
