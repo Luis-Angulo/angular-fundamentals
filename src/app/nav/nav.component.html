@@ -39,7 +39,7 @@
               [routerLink]="['user/profile']"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
-              >Welcome {{authService.currentUser.firstName}}</a
+              >Welcome {{ authService.currentUser.firstName }}</a
             >
             <a
               *ngIf="!authService.isAuthenticated()"
@@ -51,7 +51,11 @@
           </li>
         </ul>
       </div>
-      <form id="searchForm" (ngSubmit)="searchSessions(searchTerm)" class="navbar-form navbar-right">
+      <form
+        id="searchForm"
+        (ngSubmit)="searchSessions(searchTerm)"
+        class="navbar-form navbar-right"
+      >
         <div class="form-group">
           <input
             type="text"
@@ -61,10 +65,23 @@
             name="searchTerm"
           />
         </div>
-        <button class="btn btn-default">
+        <!-- modal trigger custom directive -->
+        <button class="btn btn-default" appModalTrigger>
           Search
         </button>
       </form>
     </div>
   </div>
 </div>
+
+<!-- jquery powered results modal -->
+<app-simple-modal title="Matching sessions">
+  <div class="list-group">
+    <a
+      class="list-group-item"
+      *ngFor="let session of foundSessions"
+      [routerLink]="['/events', session.eventId]"
+      >{{ session.name }}</a
+    >
+  </div>
+</app-simple-modal>
