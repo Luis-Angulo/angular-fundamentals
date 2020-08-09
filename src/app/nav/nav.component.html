@@ -65,8 +65,8 @@
             name="searchTerm"
           />
         </div>
-        <!-- modal trigger custom directive -->
-        <button class="btn btn-default" appModalTrigger>
+        <!-- modal trigger custom directive with the id as input -->
+        <button class="btn btn-default" appModalTrigger="searchResults">
           Search
         </button>
       </form>
@@ -75,7 +75,7 @@
 </div>
 
 <!-- jquery powered results modal -->
-<app-simple-modal title="Matching sessions">
+<app-simple-modal elementId="searchResults" title="Matching sessions">
   <div class="list-group">
     <a
       class="list-group-item"

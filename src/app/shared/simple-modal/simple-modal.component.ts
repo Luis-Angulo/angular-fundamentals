@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-simple-modal',
@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SimpleModalComponent implements OnInit {
   @Input() title: string;
+  @Input() elementId: string;
 
   constructor() {}
 
