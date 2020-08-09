@@ -14,6 +14,7 @@ import { JQ_TOKEN } from '../jquery.service';
   styleUrls: ['./simple-modal.component.css'],
 })
 export class SimpleModalComponent implements OnInit {
+  @Input() closeBodyOnClick: string;
   @Input() title: string;
   @Input() elementId: string;
   // requires an Angular2 local ref variable
@@ -26,6 +27,8 @@ export class SimpleModalComponent implements OnInit {
   ngOnInit(): void {}
 
   closeModal(): void {
-    this.$(this.containerElement.nativeElement).modal('hide');
+    if (this.closeBodyOnClick.toLocaleLowerCase() === 'true') {
+      this.$(this.containerElement.nativeElement).modal('hide');
+    }
   }
 }
