@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionCreateComponent } from './session-create/session-create.component';
 import { SessionsListComponent } from './sessions-list/sessions-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { VotesDisplayComponent } from './votes-display/votes-display.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { SharedModule } from '../shared/shared.module';
     EventCreateComponent,
     SessionCreateComponent,
     SessionsListComponent,
+    VotesDisplayComponent,
   ],
   exports: [EventsListComponent],
 })

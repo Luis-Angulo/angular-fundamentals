@@ -1,9 +1,22 @@
 <div class="row" *ngFor="let session of filteredSessions">
+  <!-- upvotes component -->
+  <div class="col-md-1">
+    <app-votes-display
+      (vote)="toggleVote(session)"
+      [count]="session.voters.length"
+      [voted]="userHasVoted(session)"
+    >
+    </app-votes-display>
+  </div>
+
   <div class="col-md-10">
     <app-collapsible-well>
       <div well-title>
         {{ session.name }}
-        <i *ngIf="session.voters.length > 3" class="glyphicon glyphicon-fire" ></i>
+        <i
+          *ngIf="session.voters.length > 3"
+          class="glyphicon glyphicon-fire"
+        ></i>
       </div>
       <div well-body>
         <h6>{{ session.presenter }}</h6>
