@@ -10,10 +10,14 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class SessionsListComponent implements OnChanges, OnInit {
   @Input() sessions: Session[];
+  @Input() eventId: number;
   filteredSessions: Session[];
   @Input() filterBy: string;
 
-  constructor(public voteService: VoteService, public authService: AuthService) {}
+  constructor(
+    public voteService: VoteService,
+    public authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     // this.filteredSessions = this.sessions;
@@ -39,14 +43,25 @@ export class SessionsListComponent implements OnChanges, OnInit {
   }
 
   toggleVote(session: Session): void {
-    if(this.userHasVoted(session)){
-      this.voteService.deleteVoter(session, this.authService.currentUser.userName);
+    if (this.userHasVoted(session)) {
+      this.voteService.deleteVoter(
+        this.eventId,
+        session,
+        this.authService.currentUser.userName
+      );
     } else {
-      this.voteService.addVoter(session, this.authService.currentUser.userName);
+      this.voteService.addVoter(
+        this.eventId,
+        session,
+        this.authService.currentUser.userName
+      );
     }
   }
 
   userHasVoted(session): boolean {
-    return this.voteService.userHasVoted(session, this.authService.currentUser.userName);
+    return this.voteService.userHasVoted(
+      session,
+      this.authService.currentUser.userName
+    );
   }
 }
