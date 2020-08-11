@@ -2,9 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Event } from '../types/event.type';
 import { Session } from '../types/session.type';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
+  // replaced HC events with backend request
+  public baseUrl = '/api';
+
   EVENTS: Event[] = [
     {
       id: 1,
@@ -312,30 +317,29 @@ export class EventService {
     },
   ];
 
+  constructor(public httpClient: HttpClient) {}
+
   getEvent(eventId: number): Observable<Event> {
-    return of(this.EVENTS.find((e) => e.id === eventId));
+    return this.httpClient
+      .get<Event>(`${this.baseUrl}/events/${eventId}`)
+      .pipe(catchError(this.handleError<Event>('getEvents')));
+  }
+
+  getEvents(): Observable<Event[]> {
+    return this.httpClient
+      .get<Event[]>(`${this.baseUrl}/events`)
+      .pipe(catchError(this.handleError<Event[]>('getEvents', [])));
   }
 
   saveEvent(event: Event): void {
     event.id = 999; // HC remove later
     event.sessions = [];
-    this.EVENTS.push(event);
+    this.httpClient.post(`${this.baseUrl}/events`, event);
   }
 
   updateEvent(event: Event): void {
     const index = this.EVENTS.findIndex((x) => x.id === event.id);
     this.EVENTS[index] = event;
-  }
-
-  getEvents(): Observable<Event[]> {
-    // Simulate a delayed AJAX call using observables
-    const waitMillis = 100;
-    const subject = new Subject<Event[]>();
-    setTimeout(() => {
-      subject.next(this.EVENTS);
-      subject.complete();
-    }, waitMillis);
-    return subject;
   }
 
   searchSessions(searchTerm: string): Observable<Session[]> {
@@ -354,5 +358,12 @@ export class EventService {
     });
     // original used eventemitter.emit and a timeout to simulate https delay
     return of(foundSessions);
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
   }
 }
