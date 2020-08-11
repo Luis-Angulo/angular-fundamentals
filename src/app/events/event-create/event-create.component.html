@@ -112,9 +112,11 @@
         placeholder="event price..."
       />
     </div>
-    <div ngModelGroup="location">
+    <!-- a ref to locationGroup is needed to access the location ngModelGroup from the validator -->
+    <div ngModelGroup="location" #locationGroup="ngModelGroup" appValidateLocation>
       <div class="form-group">
         <label for="address">Event Location:</label>
+        <em *ngIf="locationGroup?.invalid && locationGroup?.touched">Enter an event location or onlineURL</em>
         <input
           (ngModel)="(newEvent.location?.address)"
           name="address"
@@ -149,8 +151,10 @@
     </div>
     <div class="form-group">
       <label for="onlineUrl">Online Url:</label>
+      <!-- uses the ref to trigger revalidation when this field is updated separate from the address field -->
       <input
         (ngModel)="(newEvent.onlineUrl)"
+        (change)="locationGroup.control.controls.address.updateValueAndValidity()"
         name="onlineUrl"
         id="onlineUrl"
         type="text"
@@ -199,13 +203,14 @@
       />
     </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
     <button
-      type="button"
+      type="submit"
+      class="btn btn-primary"
       [disabled]="newEventForm.invalid"
-      class="btn btn-default"
-      (click)="cancel()"
     >
+      Save
+    </button>
+    <button type="button" class="btn btn-default" (click)="cancel()">
       Cancel
     </button>
   </form>

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Session } from 'src/app/types/session.type';
 
 @Component({
   selector: 'app-votes-display',
@@ -9,7 +8,11 @@ import { Session } from 'src/app/types/session.type';
 export class VotesDisplayComponent implements OnInit {
   @Output() vote = new EventEmitter();
   @Input() count: number;
-  @Input() voted: boolean;
+  // setter using the input decorator
+  @Input() set voted(value) {
+    this.heartColor = value ? 'red' : 'white';
+  }
+  heartColor: string;
 
   constructor() { }
 

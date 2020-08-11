@@ -13,7 +13,7 @@ export class SessionsListComponent implements OnChanges, OnInit {
   filteredSessions: Session[];
   @Input() filterBy: string;
 
-  constructor(private voteService: VoteService, private authService: AuthService) {}
+  constructor(public voteService: VoteService, public authService: AuthService) {}
 
   ngOnInit(): void {
     // this.filteredSessions = this.sessions;

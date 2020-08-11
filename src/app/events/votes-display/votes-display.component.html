@@ -1,8 +1,7 @@
 <div class="voting-widet-container pointable" (click)="onClick()">
   <div class="well voting-widget">
     <div class="voting-button">
-      <i *ngIf="voted" class="glyphicon glyphicon-heart"></i>
-      <i *ngIf="!voted" class="glyphicon glyphicon-heart-empty"></i>
+      <i [style.color]="heartColor" class="glyphicon glyphicon-heart"></i>
     </div>
     <div class="badge badge-inverse voting-count">
       <div>{{ count }}</div>

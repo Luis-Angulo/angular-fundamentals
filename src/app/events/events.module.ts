@@ -10,6 +10,7 @@ import { SessionCreateComponent } from './session-create/session-create.componen
 import { SessionsListComponent } from './sessions-list/sessions-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { VotesDisplayComponent } from './votes-display/votes-display.component';
+import { ValidateLocationDirective } from './event-create/validate-location.directive';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { VotesDisplayComponent } from './votes-display/votes-display.component';
     SessionCreateComponent,
     SessionsListComponent,
     VotesDisplayComponent,
+    ValidateLocationDirective,
   ],
   exports: [EventsListComponent],
 })
