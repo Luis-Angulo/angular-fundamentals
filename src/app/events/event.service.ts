@@ -344,21 +344,9 @@ export class EventService {
   // put is not needed, the server does upserts
 
   searchSessions(searchTerm: string): Observable<Session[]> {
-    const term = searchTerm.toLocaleLowerCase();
-    let foundSessions: Session[] = [];
-    // look for sessions that match the term for every event
-    this.EVENTS.forEach((event) => {
-      const matches = event.sessions.filter((session) =>
-        session.name.toLocaleLowerCase().includes(term)
-      );
-      const matchesWithId = matches.map((match: any) => {
-        match.eventId = event.id;
-        return match;
-      });
-      foundSessions = foundSessions.concat(matchesWithId);
-    });
-    // original used eventemitter.emit and a timeout to simulate https delay
-    return of(foundSessions);
+    return this.httpClient
+      .get<Session[]>(`/api/sessions/search?search=${searchTerm}`)
+      .pipe(catchError(this.handleError<Session[]>('searchSessions')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
