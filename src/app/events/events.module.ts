@@ -11,6 +11,7 @@ import { SessionsListComponent } from './sessions-list/sessions-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { VotesDisplayComponent } from './votes-display/votes-display.component';
 import { ValidateLocationDirective } from './event-create/validate-location.directive';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ValidateLocationDirective } from './event-create/validate-location.dire
     EventsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   declarations: [
     EventsListComponent,
