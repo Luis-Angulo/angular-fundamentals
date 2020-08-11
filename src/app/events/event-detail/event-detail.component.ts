@@ -45,7 +45,9 @@ export class EventDetailComponent implements OnInit {
     );
     session.id = oldMaxId + 1;
     this.event.sessions.push(session);
-    this.eventService.updateEvent(this.event);
-    this.addMode = false;
+    this.eventService.saveEvent(this.event).subscribe((result) => {
+      console.log(result);
+      this.addMode = false;
+    });
   }
 }

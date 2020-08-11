@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Event } from '../types/event.type';
 import { Session } from '../types/session.type';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -331,16 +331,17 @@ export class EventService {
       .pipe(catchError(this.handleError<Event[]>('getEvents', [])));
   }
 
-  saveEvent(event: Event): void {
-    event.id = 999; // HC remove later
-    event.sessions = [];
-    this.httpClient.post(`${this.baseUrl}/events`, event);
+  saveEvent(event: Event): Observable<Event> {
+    // the dev server requires manually setting the headers for post
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    return this.httpClient
+      .post<Event>(`${this.baseUrl}/events`, event, options)
+      .pipe(catchError(this.handleError<Event>('saveEvent')));
   }
 
-  updateEvent(event: Event): void {
-    const index = this.EVENTS.findIndex((x) => x.id === event.id);
-    this.EVENTS[index] = event;
-  }
+  // put is not needed, the server does upserts
 
   searchSessions(searchTerm: string): Observable<Session[]> {
     const term = searchTerm.toLocaleLowerCase();
