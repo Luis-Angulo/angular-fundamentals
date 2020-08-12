@@ -6,6 +6,10 @@ import { of, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  // This is a terrible design for an authService, its meant to illustrate the use
+  // of the techniques applied to code it, not to be something to replicate
+  // part of why its so quirky is because the simulated backend is weird and designed
+  // for the short course, not to emulate a practical auth backend
   private baseUrl = '/api';
   public currentUser: User;
 
@@ -14,6 +18,22 @@ export class AuthService {
   updateUserProfile(firstName: string, lastName: string): void {
     this.currentUser.firstName = firstName;
     this.currentUser.lastName = lastName;
+  }
+
+  checkAuthStatus() {
+    // This basically returns the observable as future proofing, which is why
+    // it uses tap before subscribe
+    return this.httpClient
+      .get(`${this.baseUrl}/currentIdentity`)
+      .pipe(
+        tap((res) => {
+          // dev server returns empty if the user is not logged in
+          if (res instanceof Object) {
+            this.currentUser = res as User;
+          }
+        })
+      )
+      .subscribe();
   }
 
   public login(userName: string, password: string) {
