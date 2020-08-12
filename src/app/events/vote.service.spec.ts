@@ -1,5 +1,3 @@
-import { TestBed } from '@angular/core/testing';
-
 import { VoteService } from './vote.service';
 import { Session } from '../types/session.type';
 import { of } from 'rxjs';
