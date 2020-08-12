@@ -19,8 +19,8 @@ describe('VoteService', () => {
   describe('deleteVoter', () => {
     it('should remove the voter from the list', () => {
       // arrange
-      const session = { id: 1, voters: ['joe', 'jack'] }; // dummy list
-      mockHttpClient.delete.and.returnValue(of(false));
+      const session = { id: 6, voters: ['joe', 'jack'] }; // dummy list
+      mockHttpClient.delete.and.returnValue(of(false)); // method must return observable
 
       // act
       service.deleteVoter(3, session as Session, 'joe');
@@ -28,6 +28,29 @@ describe('VoteService', () => {
       // assert
       expect(session.voters.length).toBe(1);
       expect(session.voters[0]).toBe('jack');
+    });
+
+    it('should call httpClient.delete correctly', () => {
+      const session = { id: 6, voters: ['joe', 'jack'] };
+      mockHttpClient.delete.and.returnValue(of(false));
+
+      service.deleteVoter(3, session as Session, 'joe');
+
+      expect(mockHttpClient.delete).toHaveBeenCalledWith(
+        `/api/events/3/sessions/6/voters/joe`
+      );
+    });
+
+    it('should call httpClient.post correctly', () => {
+      const session = { id: 6, voters: ['joe', 'jack'] };
+      mockHttpClient.post.and.returnValue(of(false));
+
+      service.addVoter(3, session as Session, 'joe');
+
+      // http post is called with a config object, so we use jasmine.any to simulate that
+      expect(mockHttpClient.post).toHaveBeenCalledWith(
+        `/api/events/3/sessions/6/voters/joe`, {}, jasmine.any(Object)
+      );
     });
   });
 });
