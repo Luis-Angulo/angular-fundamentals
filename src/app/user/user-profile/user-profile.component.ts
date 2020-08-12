@@ -49,15 +49,15 @@ export class UserProfileComponent implements OnInit {
 
   saveChanges(formValues: any): void {
     if (this.profileForm.valid) {
-      this.authService.updateUserProfile(
-        formValues.firstName,
-        formValues.lastName
-      );
-      this.toastr.success(
-        `${formValues.firstName} ${formValues.lastName}`,
-        'Update success!'
-      );
-      this.router.navigate(['events']);
+      this.authService
+        .updateUserProfile(formValues.firstName, formValues.lastName)
+        .subscribe(() => {
+          this.toastr.success(
+            `${formValues.firstName} ${formValues.lastName}`,
+            'Update success!'
+          );
+          this.router.navigate(['events']);
+        });
     }
     // maybe error message here?
   }

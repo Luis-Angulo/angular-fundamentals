@@ -15,9 +15,15 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) {}
 
-  updateUserProfile(firstName: string, lastName: string): void {
+  updateUserProfile(firstName: string, lastName: string) {
     this.currentUser.firstName = firstName;
     this.currentUser.lastName = lastName;
+
+    // might be necessary to set headers manually, add them if the server requests them
+    return this.httpClient.put(
+      `${this.baseUrl}/users/${this.currentUser.id}`,
+      this.currentUser
+    );
   }
 
   checkAuthStatus() {
