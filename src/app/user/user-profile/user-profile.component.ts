@@ -65,4 +65,12 @@ export class UserProfileComponent implements OnInit {
   cancel(): void {
     this.router.navigate(['events']);
   }
+
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.toastr.success(`Logout succesful`);
+      this.router.navigate(['/user/login']);
+    });
+  }
+
 }

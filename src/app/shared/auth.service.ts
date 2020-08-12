@@ -54,6 +54,11 @@ export class AuthService {
       .pipe(catchError(() => of(false)));
   }
 
+  public logout() {
+    this.currentUser = undefined;
+    return this.httpClient.post(`${this.baseUrl}/logout`, {});
+  }
+
   public isAuthenticated(): boolean {
     return !!this.currentUser;
   }
