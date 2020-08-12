@@ -49,15 +49,15 @@ export class UserProfileComponent implements OnInit {
 
   saveChanges(formValues: any): void {
     if (this.profileForm.valid) {
-      this.authService.updateUserProfile(
-        formValues.firstName,
-        formValues.lastName
-      );
-      this.toastr.success(
-        `${formValues.firstName} ${formValues.lastName}`,
-        'Update success!'
-      );
-      this.router.navigate(['events']);
+      this.authService
+        .updateUserProfile(formValues.firstName, formValues.lastName)
+        .subscribe(() => {
+          this.toastr.success(
+            `${formValues.firstName} ${formValues.lastName}`,
+            'Update success!'
+          );
+          this.router.navigate(['events']);
+        });
     }
     // maybe error message here?
   }
@@ -65,4 +65,12 @@ export class UserProfileComponent implements OnInit {
   cancel(): void {
     this.router.navigate(['events']);
   }
+
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.toastr.success(`Logout succesful`);
+      this.router.navigate(['/user/login']);
+    });
+  }
+
 }

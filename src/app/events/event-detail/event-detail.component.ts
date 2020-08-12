@@ -20,15 +20,12 @@ export class EventDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.forEach((params: Params) => {
-      // reset state on subscriptions
+    // route.data contains all resolved data
+    this.route.data.forEach((data) => {
+      // since the resolver already subbed, we don't need to call subscribe here
+      this.event = data.event;
       this.addMode = false;
       this.filter = 'all';
-      const eventId: number = +params.id; // cast to number
-      this.eventService.getEvent(eventId).subscribe(
-        (event) => (this.event = event),
-        (err) => alert(`event with id: ${eventId} not found`)
-      );
     });
   }
 
@@ -48,7 +45,9 @@ export class EventDetailComponent implements OnInit {
     );
     session.id = oldMaxId + 1;
     this.event.sessions.push(session);
-    this.eventService.updateEvent(this.event);
-    this.addMode = false;
+    this.eventService.saveEvent(this.event).subscribe((result) => {
+      console.log(result);
+      this.addMode = false;
+    });
   }
 }

@@ -43,6 +43,7 @@
   <app-sessions-list
     *ngIf="!addMode"
     [sessions]="event?.sessions"
+    [eventId]="event?.id"
     [filterBy]="filter"
   ></app-sessions-list>
   <app-session-create

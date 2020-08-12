@@ -2,9 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Event } from '../types/event.type';
 import { Session } from '../types/session.type';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
+  // replaced HC events with backend request
+  public baseUrl = '/api';
+
   EVENTS: Event[] = [
     {
       id: 1,
@@ -312,47 +317,42 @@ export class EventService {
     },
   ];
 
+  constructor(public httpClient: HttpClient) {}
+
   getEvent(eventId: number): Observable<Event> {
-    return of(this.EVENTS.find((e) => e.id === eventId));
-  }
-
-  saveEvent(event: Event): void {
-    event.id = 999; // HC remove later
-    event.sessions = [];
-    this.EVENTS.push(event);
-  }
-
-  updateEvent(event: Event): void {
-    const index = this.EVENTS.findIndex((x) => x.id === event.id);
-    this.EVENTS[index] = event;
+    return this.httpClient
+      .get<Event>(`${this.baseUrl}/events/${eventId}`)
+      .pipe(catchError(this.handleError<Event>('getEvents')));
   }
 
   getEvents(): Observable<Event[]> {
-    // Simulate a delayed AJAX call using observables
-    const waitMillis = 100;
-    const subject = new Subject<Event[]>();
-    setTimeout(() => {
-      subject.next(this.EVENTS);
-      subject.complete();
-    }, waitMillis);
-    return subject;
+    return this.httpClient
+      .get<Event[]>(`${this.baseUrl}/events`)
+      .pipe(catchError(this.handleError<Event[]>('getEvents', [])));
   }
 
+  saveEvent(event: Event): Observable<Event> {
+    // the dev server requires manually setting the headers for post
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    return this.httpClient
+      .post<Event>(`${this.baseUrl}/events`, event, options)
+      .pipe(catchError(this.handleError<Event>('saveEvent')));
+  }
+
+  // put is not needed, the server does upserts
+
   searchSessions(searchTerm: string): Observable<Session[]> {
-    const term = searchTerm.toLocaleLowerCase();
-    let foundSessions: Session[] = [];
-    // look for sessions that match the term for every event
-    this.EVENTS.forEach((event) => {
-      const matches = event.sessions.filter((session) =>
-        session.name.toLocaleLowerCase().includes(term)
-      );
-      const matchesWithId = matches.map((match: any) => {
-        match.eventId = event.id;
-        return match;
-      });
-      foundSessions = foundSessions.concat(matchesWithId);
-    });
-    // original used eventemitter.emit and a timeout to simulate https delay
-    return of(foundSessions);
+    return this.httpClient
+      .get<Session[]>(`/api/sessions/search?search=${searchTerm}`)
+      .pipe(catchError(this.handleError<Session[]>('searchSessions')));
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
   }
 }

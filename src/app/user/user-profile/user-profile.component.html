@@ -2,7 +2,12 @@
   <h1>Edit Your Profile</h1>
   <hr />
   <div class="col-md-4">
-    <form autocomplete="off" novalidate [formGroup]="profileForm" (ngSubmit)="saveChanges(profileForm.value)">
+    <form
+      autocomplete="off"
+      novalidate
+      [formGroup]="profileForm"
+      (ngSubmit)="saveChanges(profileForm.value)"
+    >
       <div class="form-group">
         <label for="firstName">First Name:</label>
         <input
@@ -11,11 +16,13 @@
           class="form-control"
           placeholder="First Name..."
           formControlName="firstName"
-          [ngClass]="{'error': !isFirstNameValid()}"
+          [ngClass]="{ error: !isFirstNameValid() }"
         />
       </div>
       <em *ngIf="!isFirstNameValid() && firstName.errors.required">Required</em>
-      <em *ngIf="!isFirstNameValid() && firstName.errors.pattern">Alphabetical characters only</em>
+      <em *ngIf="!isFirstNameValid() && firstName.errors.pattern"
+        >Alphabetical characters only</em
+      >
       <div class="form-group">
         <label for="lastName">Last Name:</label>
         <input
@@ -24,14 +31,21 @@
           class="form-control"
           placeholder="Last Name..."
           formControlName="lastName"
-          [ngClass]="{'error': !isLastNameValid()}"
+          [ngClass]="{ error: !isLastNameValid() }"
         />
         <em *ngIf="!isLastNameValid()">Required</em>
-        <em *ngIf="!isLastNameValid() && lastName.errors.pattern">Alphabetical characters only</em>
+        <em *ngIf="!isLastNameValid() && lastName.errors.pattern"
+          >Alphabetical characters only</em
+        >
       </div>
 
       <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+      <button type="button" class="btn btn-default" (click)="cancel()">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-warning" (click)="logout()">
+        Log out
+      </button>
     </form>
   </div>
 </div>
