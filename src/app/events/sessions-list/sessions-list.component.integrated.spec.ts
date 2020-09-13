@@ -1,5 +1,5 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { SessionsListComponent } from './sessions-list.component';
 import { By } from '@angular/platform-browser';
 import { AuthService } from 'src/app/shared/auth.service';
@@ -36,18 +36,24 @@ describe('SessionsListComponent', () => {
     // Prepares a test module env for the component
     // The arg is the same type of obj. that an NgModule takes
     // You can include a schemas prop if the component you're testing needs it (if it's bootstrapped)
+    // You can also squelch angular template errors by using the NO_ERRORS_SCHEMA (@angular/core)
+    // the drawback is NO_ERRORS_SCHEMA might hide legitimate template errors, use with care
     TestBed.configureTestingModule({
       imports: [],
       declarations: [
         SessionsListComponent, // the tested component
-        VotesDisplayComponent, // and its children
+        // children can be omitted using NO_ERRORS_SCHEMA for shallow tests
+        // VotesDisplayComponent, // and its children
         DurationPipe,
-        CollapsibleWellComponent,
+        // CollapsibleWellComponent,
       ],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: VoteService, useValue: mockVoterService },
       ],
+      schemas: [
+          NO_ERRORS_SCHEMA
+      ]
     });
   });
 
