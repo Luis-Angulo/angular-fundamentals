@@ -81,7 +81,10 @@ describe('SessionsListComponent', () => {
       // Call detect changes to force the component to render its template
       fixture.detectChanges();
       // test the html template itself to see if the component rendered it correctly
-      const sessionName = element.querySelector('[well-title]').textContent;
+      // You can use the debug element instead of the native element
+      // the debug element allows extra functionality, like querying by directive or component
+      const sessionName = debugEl.query(By.css('[well-title]')).nativeElement.textContent;
+      // const sessionName = element.querySelector('[well-title]').textContent;
       expect(sessionName).toContain(session.name); // less brittle than exact match
     });
   });
